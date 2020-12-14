@@ -1271,7 +1271,17 @@ class Candlepin
     qparams = {}
     qparams[:serials] = serials.join(",") if serials.length > 0
 
-    return get(path, qparams)
+    # escape and build uri
+    euri = URI.escape(path)
+    if !qparams.empty?
+      euri << '?'
+      euri << URI.encode_www_form(qparams)
+    end
+
+    # execute
+    response = get_client(euri, Net::HTTP::Get, :get)[euri].get :accept => 'application/json'
+
+    return JSON.parse(response.body)
   end
 
   def get_content_access_body(params = {})

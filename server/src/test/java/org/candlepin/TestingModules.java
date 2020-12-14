@@ -331,6 +331,9 @@ public class TestingModules {
             bindInterceptor(Matchers.subclassesOf(OwnerResource.class),
                 Matchers.any(), authMethodInterceptor);
 
+            bindInterceptor(Matchers.subclassesOf(ConsumerResource.class),
+                Matchers.any(), authMethodInterceptor);
+
             // temporary
             bind(IdentityCertServiceAdapter.class).to(DefaultIdentityCertServiceAdapter.class);
             bind(PoolRules.class);
